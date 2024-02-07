@@ -48,8 +48,6 @@
                             <li style='padding-left: 544px'><a href="index.html" class="nav-link active">Home</a></li>
                             <li><a href="about.html">About</a></li>
 
-                            <li><a href="profile.html">Profile</a></li>
-
                             <li><a href="contact.html">Contact</a></li>
                             <li class="d-lg-none"><a href="post-job.html"><span class="mr-2">+</span> Post a Job</a>
                             </li>
@@ -68,6 +66,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('users.profile') }}">
+                                        Profile
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}

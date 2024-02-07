@@ -26,6 +26,22 @@
 @endif
 </div>
 
+<div class="container">
+@if (\Session::has('apply'))
+    <div class="alert alert-warning">
+        <p>{!! \Session::get('apply') !!}</p>
+    </div>
+@endif
+</div>
+
+<div class="container">
+@if (\Session::has('applied'))
+    <div class="alert alert-success">
+        <p>{!! \Session::get('applied') !!}</p>
+    </div>
+@endif
+</div>
+
 
 <section class="site-section">
     <div class="container">
@@ -100,7 +116,20 @@
                             <!--add text-danger to it to make it read-->
                         </div>
                         <div class="col-6">
-                            <button class="btn btn-block btn-primary btn-md">Apply Now</button>
+                        <form action="{{ route('apply.job') }}" method="POST">
+                                @csrf
+                                <input name="job_id" type="hidden" value="{{ $job->id }}" />
+                                <input name="job_image" type="hidden" value="{{ $job->image }}" />
+                                <input name="job_title" type="hidden" value="{{ $job->job_title }}" />
+                                <input name="job_region" type="hidden" value="{{ $job->job_region }}" />
+                                <input name="job_type"type="hidden" value="{{ $job->job_type }}" />
+                                <input name="company" type="hidden" value="{{ $job->company }}" />
+                                @if ($appliedJob > 0)
+                                <button class="btn btn-block btn-primary btn-md" disabled>Already Applied</button>
+                                @else
+                                <button class="btn btn-block btn-primary btn-md" name="submit" type="submit">Apply Now</button>
+                                @endif
+                            </form>
                         </div>
                     </div>
 
@@ -137,6 +166,15 @@
                                 href="https://www.linkedin.com/sharing/share-offsite/?url={{ route('single.jobs', $job->id) }}"><span
                                     class="icon-linkedin"></span></a>
                         </div>
+                    </div>
+
+                    <div class="bg-light p-3 border mt-4 rounded mb-4">
+                        <h3 class="text-primary h5 pl-3 mb-3 ">Categories</h3>
+                        <ul class="list-unstyled pl-3 mb-0">
+                            @foreach ($categories as $category)
+                            <li class="mb-2"><a class="text-decoration-none" href="{{ route('categories.single', $category->name) }}"> {{ $category->name }}</a></li>
+                            @endforeach
+                        </ul>
                     </div>
 
                 </div>
