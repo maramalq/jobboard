@@ -28,3 +28,8 @@ Route::get('/categories/single/{id}', [App\Http\Controllers\Categories\Categorie
 Route::get('/users/profile', [App\Http\Controllers\Users\UsersController::class, 'profile'])->name('users.profile');
 Route::get('/users/applications', [App\Http\Controllers\Users\UsersController::class, 'applications'])->name('users.applications');
 Route::get('/users/savedjobs', [App\Http\Controllers\Users\UsersController::class, 'savedJobs'])->name('users.savedjobs');
+Route::get('/users/edit-profile', [App\Http\Controllers\Users\UsersController::class, 'editProfile'])->name('users.editProfile');
+Route::post('/users/edit-profile', [App\Http\Controllers\Users\UsersController::class, 'updateProfile'])->name('users.updateProfile');
+Route::get('/users/edit-cv', [App\Http\Controllers\Users\UsersController::class, 'editCV'])->name('users.editCV');
+Route::post('/users/edit-cv', [App\Http\Controllers\Users\UsersController::class, 'updateCV'])->name('users.updateCV');
+

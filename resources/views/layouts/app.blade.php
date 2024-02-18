@@ -69,6 +69,12 @@
                                     <a class="dropdown-item" href="{{ route('users.profile') }}">
                                         Profile
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('users.editProfile') }}">
+                                        Edit Profile
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('users.editCV') }}">
+                                        Edit CV
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('users.applications') }}">
                                     Applications
                                     </a>
