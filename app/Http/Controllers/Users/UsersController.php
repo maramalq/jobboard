@@ -33,6 +33,16 @@ class UsersController extends Controller
 
     }
     public function updateProfile(Request $request){
+
+        $request->validate([
+            "name"=> "required|max:200",
+            "job_title"=> "required|max:200",
+            "bio"=> "required",
+            "facebook"=> "required|max:200",
+            "twitter"=> "required|max:200",
+            "linkedin"=> "required|max:200",
+        ]);
+
         $userProfileUpdate = User::find(Auth::user()->id);
         $userProfileUpdate->update([
             "name" => $request->name,
@@ -43,7 +53,7 @@ class UsersController extends Controller
             "linkedin" => $request->linkedin,
         ]);
         if ($userProfileUpdate) {
-            return redirect('/users/edit-profile')->with('save', 'update user profile successfully');
+            return redirect('/users/edit-profile')->with('save', 'Update user profile successfully');
         }
 
     }
@@ -71,7 +81,7 @@ class UsersController extends Controller
         ]);
 
         // success message 
-        return redirect('/users/profile')->with('save', 'cv updated successfully');
+        return redirect('/users/profile')->with('save', 'CV updated successfully');
 
     }
 }

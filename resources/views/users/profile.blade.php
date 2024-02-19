@@ -6,17 +6,17 @@
     style="background-image: url({{ asset('assets/images/hero_1.jpg') }}); margin: -24px 0;" id="home-section">
     <div class="container">
 
-        <div class="container">
-            @if (\Session::has('save'))
-            <div class="alert alert-success">
-                <p>{!! \Session::get('save') !!}</p>
-            </div>
-            @endif
-        </div>
-
         <div class="row d-flex justify-content-center">
             <div class="col-md-7">
                 <div class="card p-3 py-4">
+
+                    <div class="container">
+                        @if (\Session::has('save'))
+                        <div class="alert alert-success">
+                            <p>{!! \Session::get('save') !!}</p>
+                        </div>
+                        @endif
+                    </div>
 
                     <div class="text-center">
                         <img src="{{ asset('assets/images/users/'.$profile->image.'') }}" width="100"

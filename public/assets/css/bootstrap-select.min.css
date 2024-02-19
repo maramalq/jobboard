@@ -15,7 +15,7 @@
 select.bs-select-hidden,
 .bootstrap-select > select.bs-select-hidden,
 select.selectpicker {
-  display: none !important;
+  /* display: none; */
 }
 .bootstrap-select {
   width: 220px \0;

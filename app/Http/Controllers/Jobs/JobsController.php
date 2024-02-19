@@ -8,6 +8,7 @@ use App\Models\job\job;
 use App\Models\job\JobSaved;
 use App\Models\job\Application;
 use App\Models\Category\Category;
+use App\Models\Search\Search;
 use Auth;
 
 class JobsController extends Controller
@@ -25,17 +26,24 @@ class JobsController extends Controller
             ->take(5)
             ->count();
 
-        $savedJob = JobSaved::where('job_id', $id)
-            ->where('user_id', Auth::user()->id)
-            ->count();
-
-        $appliedJob = Application::where('job_id', $id)
-            ->where('user_id', Auth::user()->id)
-            ->count();
-
         $categories = Category::all();
-             
-        return view("jobs.single", compact("job", "relatedJobs", "relatedJobsCount", "savedJob", "appliedJob", "categories"));
+
+        if(auth()->user()) {
+            $savedJob = JobSaved::where('job_id', $id)
+                ->where('user_id', Auth::user()->id)
+                ->count();
+
+            $appliedJob = Application::where('job_id', $id)
+                ->where('user_id', Auth::user()->id)
+                ->count();
+
+            return view("jobs.single", compact("job", "relatedJobs", "relatedJobsCount", "savedJob", "appliedJob", "categories"));
+
+        } else {    
+            return view("jobs.single", compact("job", "relatedJobs", "relatedJobsCount", "categories"));
+
+        }
+
     }
 
     public function saveJob(Request $request)
@@ -43,7 +51,7 @@ class JobsController extends Controller
 
         $saveJob = JobSaved::create([
             'job_id' => $request->job_id,
-            'user_id' => $request->user_id,
+            'user_id' => Auth::user()->id,
             'job_image' => $request->job_image,
             'job_title' => $request->job_title,
             'job_region' => $request->job_region,
@@ -74,5 +82,29 @@ class JobsController extends Controller
             }
 
         }
+    }
+    public function search(Request $request)
+    {
+
+        $request->validate([
+            "job_title" => "required",
+            "job_region" => "required",
+            "job_type" => "required",
+        ]);
+
+        Search::Create([
+            "keyword" => $request->job_title,
+        ]);
+
+        $job_title = $request->get('job_title');
+        $job_region = $request->get('job_region');
+        $job_type = $request->get('job_region');
+        
+        $searches = Job::select()->where('job_title', 'like', "%$job_title%")
+                                ->where('job_region', 'like', "%$job_region%")
+                                ->where('job_type', 'like', "%$job_type%")
+                                ->get();
+        
+        return view('jobs.search', compact('searches'));
     }
 }
